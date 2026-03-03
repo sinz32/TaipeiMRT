@@ -1,6 +1,7 @@
 const http = require('http');
 const axios = require('axios');
 const CryptoJS = require('crypto-js');
+const SecretKey = require('./keys');
 
 http.createServer(async (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
@@ -27,7 +28,7 @@ async function getTrainList(line) {
     const lineId = internalLineIds[line];
 
 	const ts = Math.floor(Date.now() / 1000).toString();
-	const value = CryptoJS.HmacSHA256(lineId + ts, atob("dGFpcGVpbWV0cm9jYXJ0MQ==")).toString();
+	const value = CryptoJS.HmacSHA256(lineId + ts, SecretKey.HmacSHA256).toString();
 
 	const response = await axios.post(url, {
 		"service":"cartRoute",
@@ -40,8 +41,8 @@ async function getTrainList(line) {
 		}
 	});
     
-    const key = CryptoJS.enc.Utf8.parse(atob("dGFpcGVpbWV0cm9hcHAwNg=="));
-    const iv = CryptoJS.enc.Utf8.parse(atob("bWV0cm9hcHBpZHh0amdscQ=="));
+    const key = CryptoJS.enc.Utf8.parse(SecretKey.AES);
+    const iv = CryptoJS.enc.Utf8.parse(SecretKey.AES_IV);
     const data = CryptoJS.AES.decrypt(response.data, key, {
         iv: iv,
         mode: CryptoJS.mode.CBC,
