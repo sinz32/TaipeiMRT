@@ -115,13 +115,13 @@ const SecretKey = require('./keys');
         data.forEach((e) => {
             let dir = e.cDirection;
             if (dir == 'none') return;
-            dir = dir == 'up' ? 'down' : 'up';
+            // dir = dir == 'up' ? 'down' : 'up';
 
             let sts = '도착';
             let stnId = e.cNumberStn;
             if (stnId.includes('-')) {
                 stnId = stnId.split('-');
-                stnId = dir == 'up' ? stnId[1] : stnId[0];
+                stnId = dir == 'up' ? stnId[0] : stnId[1];
                 sts = '접근';
             }
             
