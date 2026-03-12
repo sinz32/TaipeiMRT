@@ -19,6 +19,10 @@ const SecretKey = require('./keys');
         const stns = getStationList(line);
         const data = await getTrainList(lineId);
         const terminals = {
+            
+            南港展覽館: '난강전람관',
+            動物園: '동물원',
+
             淡水: '단수이',
             大安: '다안',
             象山: '샹산',
@@ -47,38 +51,17 @@ const SecretKey = require('./keys');
     }
 
     function getStationList(line) {
-        return [
-            {name: '샹산 (象山)', id: '099'},
-            {name: '타이베이 101/세계무역센터 (台北101/世貿)', id: '100'},
-            {name: '신이안허 (信義安和)', id: '101'},
-            {name: '다안 (大安)', id: '011'},
-            {name: '다안삼림공원 (大安森林公園)', id: '103'},
-            {name: '동먼 (東門)', id: '134'},
-            {name: '중정기념당 (中正紀念堂)', id: '042'},
-            {name: '타이완대학병원 (台大醫院)', id: '050'},
-            {name: '타이베이역 (台北車站)', id: '051'},
-            {name: '중산 (中山)', id: '053'},
-            {name: '솽롄 (雙連)', id: '054'},
-            {name: '민취안시루 (民權西路)', id: '055'},
-            {name: '위안산 (圓山)', id: '056'},
-            {name: '젠탄 (劍潭)', id: '057'},
-            {name: '스린 (士林)', id: '058'},
-            {name: '즈산 (芝山)', id: '059'},
-            {name: '밍더 (明德)', id: '060'},
-            {name: '스파이 (石牌)', id: '061'},
-            {name: '치리안 (唭哩岸)', id: '062'},
-            {name: '치옌 (奇岩)', id: '063'},
-            {name: '베이터우 (北投)', id: '064'},
-            {name: '푸싱강 (復興崗)', id: '066'},
-            {name: '중이 (忠義)', id: '067'},
-            {name: '관두 (關渡)', id: '068'},
-            {name: '주웨이 (竹圍)', id: '069'},
-            {name: '홍수린 (紅樹林)', id: '070'},
-            {name: '단수이 (淡水)', id: '071'},
-
-            {name: '베이터우 (北投)', id: '064b'},
-            {name: '신베이터우 (新北投)', id: '065'}
-        ];
+        switch (line) {
+            case 'BR':
+                return [
+                    {name: '동물원 (動物園)', id: '019'},{name: '무자 (木柵)', id: '018'},{name: '완팡단지 (萬芳社區)', id: '017'},{name: '완팡병원 (萬芳醫院)', id: '016'},{name: '신하이 (辛亥)', id: '015'},{name: '린광 (麟光)', id: '014'},{name: '류장리 (六張犁)', id: '013'},{name: '테크놀로지 빌딩 (科技大樓)', id: '012'},{name: '다안 (大安)', id: '011'},{name: '중샤오푸싱 (忠孝復興)', id: '010'},{name: '난징푸싱 (南京復興)', id: '009'},{name: '중산중학교 (中山國中)', id: '008'},{name: '송산공항 (中山國中)', id: '007'},{name: '다즈 (大直)', id: '021'},{name: '젠난루 (劍南路)', id: '022'},{name: '시후 (西湖)', id: '023'},{name: '강첸 (港墘)', id: '024'},{name: '원더 (文德)', id: '025'},{name: '네이후 (內湖)', id: '026'},{name: '다후공원 (大湖公園)', id: '027'},{name: '후저우 (葫洲)', id: '028'},{name: '동후 (東湖)', id: '029'},{name: '난강 소프트웨어 단지 (南港軟體園區)', id: '030'},{name: '난강전람관 (南港展覽館)', id: '031'}
+                ];
+            case 'R':
+                return [
+                    {name: '샹산 (象山)', id: '099'},{name: '타이베이 101/세계무역센터 (台北101/世貿)', id: '100'},{name: '신이안허 (信義安和)', id: '101'},{name: '다안 (大安)', id: '011'},{name: '다안삼림공원 (大安森林公園)', id: '103'},{name: '동먼 (東門)', id: '134'},{name: '중정기념당 (中正紀念堂)', id: '042'},{name: '타이완대학병원 (台大醫院)', id: '050'},{name: '타이베이역 (台北車站)', id: '051'},{name: '중산 (中山)', id: '053'},{name: '솽롄 (雙連)', id: '054'},{name: '민취안시루 (民權西路)', id: '055'},{name: '위안산 (圓山)', id: '056'},{name: '젠탄 (劍潭)', id: '057'},{name: '스린 (士林)', id: '058'},{name: '즈산 (芝山)', id: '059'},{name: '밍더 (明德)', id: '060'},{name: '스파이 (石牌)', id: '061'},{name: '치리안 (唭哩岸)', id: '062'},{name: '치옌 (奇岩)', id: '063'},{name: '베이터우 (北投)', id: '064'},{name: '푸싱강 (復興崗)', id: '066'},{name: '중이 (忠義)', id: '067'},{name: '관두 (關渡)', id: '068'},{name: '주웨이 (竹圍)', id: '069'},{name: '홍수린 (紅樹林)', id: '070'},{name: '단수이 (淡水)', id: '071'},
+                    {name: '베이터우 (北投)', id: '064b'},{name: '신베이터우 (新北投)', id: '065'}
+                ];
+        }
     }
 
 
@@ -115,37 +98,40 @@ const SecretKey = require('./keys');
         data.forEach((e) => {
             let dir = e.cDirection;
             if (dir == 'none') return;
-            // dir = dir == 'up' ? 'down' : 'up';
+            dir = dir == 'up' ? 'down' : 'up';
+            
 
             let sts = '도착';
             let stnId = e.cNumberStn;
             if (stnId.includes('-')) {
                 stnId = stnId.split('-');
-                stnId = dir == 'up' ? stnId[0] : stnId[1];
+                stnId = dir == 'up' ? stnId[1] : stnId[0];
                 sts = '접근';
             }
             
             //신베이터우 지선 예외처리
             if (lineId == 'RG') {
                 var pos = e.cPosition;
-                dir = dir == 'up' ? 'down' : 'up';
                 if (pos == 200) {
+                    dir = dir == 'up' ? 'down' : 'up';
                     stnId = '064b';
                     sts = '도착';
                 }
                 if (pos == 201) {
+                    dir = dir == 'up' ? 'down' : 'up';
                     if (dir == 'up') stnId = '064b';
                     else stnId = '065';
                     sts = '접근';
                 }
                 if (pos == 202) {
+                    dir = dir == 'up' ? 'down' : 'up';
                     stnId = '065';
                     sts = '도착';
                 }
             }
 
             result.push({
-                no: e.cNumber,
+                no: e.cNumber ? e.cNumber : e.sPVID,
                 sts: sts,
                 terminal: e.cDestName.slice(0, -1),
                 stnId: stnId,
