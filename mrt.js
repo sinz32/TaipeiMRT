@@ -145,7 +145,7 @@ const SecretKey = require('./keys');
             
             //신베이터우 지선 예외처리
             if (lineId == 'RG') {
-                var pos = e.cPosition;
+                let pos = e.cPosition;
                 if (pos == 200) {
                     dir = dir == 'up' ? 'down' : 'up';
                     stnId = '064b';
@@ -164,6 +164,27 @@ const SecretKey = require('./keys');
                 }
             }
 
+            //샤오비탄 지선
+            else if (lineId == 'GR') {
+                var pos = e.cPosition;
+                if (pos == 302) {
+                    dir = dir == 'up' ? 'down' : 'up';
+                    stnId = '035b';
+                    sts = '도착';
+                }
+                if (pos == 301) {
+                    dir = dir == 'up' ? 'down' : 'up';
+                    if (dir == 'up') stnId = '035b';
+                    else stnId = '032';
+                    sts = '접근';
+                }
+                if (pos == 300) {
+                    dir = dir == 'up' ? 'down' : 'up';
+                    stnId = '032';
+                    sts = '도착';
+                }
+            }
+            
             result.push({
                 no: e.cNumber ? e.cNumber : e.sPVID,
                 sts: sts,
