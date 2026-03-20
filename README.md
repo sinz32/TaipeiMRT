@@ -5,11 +5,13 @@
 $ git clone https://github.com/sinz32/TaipeiMRT.git
 $ cd TaipeiMRT
 $ cd app.js
+# http://localhost:8080/?line=${lineId}
 ```
-
-## 지원하는 노선
-- 원후선
-- 단수이·신이선
-- 송산·신덴선
-- 중허신루선
-- 반난선
+|노선명|lineId|
+|:---:|:---:|
+|원후선|BR|
+|단수이·신이선|R|
+|송산·신덴선|G|
+|중허신루선|O|
+|반난선|BL|
+|순환선|Y|
