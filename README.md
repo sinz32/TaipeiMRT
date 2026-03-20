@@ -7,7 +7,7 @@ $ cd TaipeiMRT
 $ cd app.js
 # http://localhost:8080/?line=${lineId}
 ```
-|노선명|lineId|
+|노선|lineId|
 |:---:|:---:|
 |원후선|BR|
 |단수이·신이선|R|
