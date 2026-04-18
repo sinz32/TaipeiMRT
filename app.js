@@ -1,6 +1,7 @@
 const http = require('http');
 const mrt = require('./mrt');
 const lrt = require('./lrt');
+const airport = require('./airport');
 
 http.createServer(async (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
@@ -13,6 +14,8 @@ http.createServer(async (req, res) => {
     const lineId = params.line;
     if (lineId == 'K' || lineId == 'V') {
         result = await lrt.get(lineId);
+    } else if (lineId == 'A') {
+        result = await airport.get(lineId);
     } else {
         result = await mrt.get(lineId);
     }
