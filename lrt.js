@@ -1,6 +1,4 @@
 const axios = require('axios');
-const CryptoJS = require('crypto-js');
-const SecretKey = require('./keys');
 
 (function() {
 
