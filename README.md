@@ -4,7 +4,7 @@
 ```sh
 $ git clone https://github.com/sinz32/TaipeiMRT.git
 $ cd TaipeiMRT
-$ cd app.js
+$ node app.js
 # http://localhost:8080/?line=${lineId}
 ```
 |노선|lineId|
